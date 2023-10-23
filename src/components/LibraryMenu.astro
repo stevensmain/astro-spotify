@@ -1,0 +1,23 @@
+---
+import AsideMenuItem from "@components/AsideMenuItem.astro";
+import PlaylistMenuCard from "@components/LibraryMenuCard.astro";
+import LibraryIcon from "@icons/Library.astro";
+import { playlists } from "@data";
+---
+
+<div class="bg-zinc-900 rounded-lg p-2 flex flex-col flex-1">
+  <header>
+    <ul>
+      <AsideMenuItem>
+        <LibraryIcon />
+         My Library
+      </AsideMenuItem>
+    </ul>
+  </header>
+
+  <div class="relative flex-1">
+    <div class="absolute left-0 h-full overflow-y-auto w-full">
+      {playlists.map((playlist) => <PlaylistMenuCard playlist={playlist} />)}
+    </div>
+  </div>
+</div>

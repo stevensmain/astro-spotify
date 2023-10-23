@@ -1,0 +1,39 @@
+---
+import { playlists } from "@data";
+import Layout from "../layouts/Layout.astro";
+import PlaylistItemCard from "@components/PlaylistItemCard.astro";
+import Gretting from "@components/Gretting.astro";
+
+import { colors } from "@colors";
+---
+
+<Layout title="Spotify - Astro Clone">
+  <div
+    id="playlist-container"
+    class="rounded-lg bg-zinc-900 overflow-hidden h-full transition-all duration-300"
+    transition:name=`background box`
+  >
+    <div class="relative h-full p-2 z-10">
+      <div class="greetings px-6 pt-10">
+        <Gretting />
+      </div>
+
+      <div class="playlist-grid gap-3 mt-6">
+        {playlists.map((playlist) => <PlaylistItemCard playlist={playlist} />)}
+      </div>
+
+      <div
+        class="absolute inset-0 -z-[1] top-0 left-0 w-full h-full"
+        style={`background:linear-gradient(to top, transparent, transparent, transparent, ${colors.green.accent})`}
+      >
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+</style>

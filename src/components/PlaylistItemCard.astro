@@ -1,0 +1,47 @@
+---
+import type { Playlist } from "@data";
+interface Props {
+  playlist: Playlist;
+}
+
+const { playlist } = Astro.props;
+const { id, title, color, cover, artists } = playlist;
+const formattedArtist = new Intl.ListFormat("en", {
+  localeMatcher: "best fit",
+}).format(artists);
+const date = new Date();
+date.getMonth();
+---
+
+<article
+  class="group relative w-full rounded-md cursor-pointer overflow-hidden bg-zinc-500/30 shadow-lg hover:shadow-xl hover:bg-zinc-800 transition-all duration-300"
+>
+  <a
+    href={`/playlist/${id}`}
+    class="flex flex-col p-2 gap-2"
+    transition:name=`playlist ${playlist?.id} box`
+  >
+    <picture class="aspect-square w-full h-auto overflow-hidden rounded-md">
+      <img
+        src={cover}
+        alt={`Cover of ${title} by ${formattedArtist}`}
+        class="object-cover w-full h-full"
+        transition:name=`playlist ${playlist?.id} image`
+      />
+    </picture>
+
+    <div class="flex flex-col flex-auto px-2">
+      <h4
+        class="text-white text-sm"
+        transition:name=`playlist ${playlist?.id} title`
+      >
+        {title}
+      </h4>
+      <span
+        class="text-xs text-[#b3b3b3]"
+        transition:name=`playlist ${playlist?.id} artist`
+        >{formattedArtist}</span
+      >
+    </div>
+  </a>
+</article>
