@@ -1,29 +1,44 @@
-import { useState } from "react";
 import Pause from "@icons/Pause";
 import Play from "@icons/Play";
 
-type Type = "player" | "card";
-type Size = "small" | "mid";
+interface Props {
+  isPlaying: boolean;
+  onClick?: () => void;
+  className?: string;
+  size: "sm" | "md" | "lg";
+}
 
-function PlayButton({ size = "small", type }: { size?: Size; type: Type }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+function PlayButton({ onClick, className, isPlaying, size }: Props) {
+  const iconClassnames = {
+    sm: "w-5 h-5",
+    md: "w-6 h-6",
+    lg: "w-8 h-8",
+  };
 
-  const handleClick = () => {
-    setIsPlaying(!isPlaying);
+  const paddingSize = {
+    sm: "p-2",
+    md: "p-3",
+    lg: "p-4",
   };
 
   return (
     <button
-      onClick={handleClick}
-      className={`"card-play-button 
+      onClick={onClick}
+      className={`
+      card-play-button 
       rounded-full 
       text-black
       transition-all
       hover:scale-105
-      ${size === "small" ? "p-2" : "p-4"}
-      ${type === "player" ? "bg-white  " : "bg-green-500 hover:bg-green-400"}`}
+      bg-white-500
+      ${paddingSize[size]}
+      ${className}`}
     >
-      {isPlaying ? <Pause /> : <Play />}
+      {isPlaying ? (
+        <Pause className={iconClassnames[size]} />
+      ) : (
+        <Play className={iconClassnames[size]} />
+      )}
     </button>
   );
 }
