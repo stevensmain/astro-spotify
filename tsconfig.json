@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": "C:/Users/Personal/Documents/projects/astro-spotify",
+    "baseUrl": ".",
     "paths": {
       "@icons/*": [
         "./src/icons/*"
