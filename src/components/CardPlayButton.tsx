@@ -21,7 +21,7 @@ function CardPlayButton({ id }: Props) {
       return;
     }
 
-    fetch(`/api/getPlaylist?id=${id}`)
+    fetch(`/api/get-playlist?id=${id}`)
       .then(async (resp) => await resp.json())
       .then(({ playlist, songs }) => {
         const currentSongIndex = Math.floor(Math.random() * songs.length);
