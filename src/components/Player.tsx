@@ -2,17 +2,20 @@ import { useEffect, useRef } from "react";
 import usePlayerStore from "src/store/playerStore";
 import PlayButton from "./PlayButton";
 import VolumeControl from "./VolumeControl";
+import SongControl from "./SongControl";
 
 const Player = () => {
   const isPlaying = usePlayerStore((state) => state.isPlaying);
   const setIsPlaying = usePlayerStore((state) => state.setIsPlaying);
-  const { song, playlist } = usePlayerStore((state) => state.currentMusic);
+  const currentMusic = usePlayerStore((state) => state.currentMusic);
   const volume = usePlayerStore((state) => state.volume);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
-  }, [isPlaying, audioRef]);
+  const { playlist, song } = currentMusic;
+
+  const handleClick = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   useEffect(() => {
     if (song && audioRef.current) {
@@ -28,9 +31,9 @@ const Player = () => {
     }
   }, [volume, audioRef]);
 
-  const handleClick = () => {
-    setIsPlaying(!isPlaying);
-  };
+  useEffect(() => {
+    isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
+  }, [isPlaying, audioRef]);
 
   return (
     <div className="flex flex-row justify-between w-full px-1 z-50">
@@ -50,6 +53,7 @@ const Player = () => {
             onClick={handleClick}
             className="bg-white"
           />
+          <SongControl audio={audioRef} />
           <audio ref={audioRef} />
         </div>
       </div>
@@ -75,13 +79,13 @@ const CurrentSong = ({
   }).format(artists);
 
   return (
-    <div className="flex items-center gap-5 relative  overflow-hidden">
-      <picture className="w-16 h-16 bg-zinc-800 rounded-md shadow-lg overflow-hidden">
+    <div className="flex items-center gap-5 relative overflow-hidden">
+      <picture className="w-16 h-16 bg-zinc-800 rounded-md shadow -lg overflow-hidden">
         <img src={image} alt={title} />
       </picture>
 
       <div className="flex flex-col">
-        <h3 className="font-semibold text-sm block">{title}</h3>
+        <h3 className="font-semibold text-sm w-28 truncate">{title}</h3>
         <span className="text-xs opacity-80">{formattedArtist}</span>
       </div>
     </div>

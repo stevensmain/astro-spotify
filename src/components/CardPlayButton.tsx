@@ -8,11 +8,16 @@ interface Props {
 function CardPlayButton({ id }: Props) {
   const { setIsPlaying, isPlaying, currentMusic, setCurrentMusic } =
     usePlayerStore((state) => state);
-  const isPlayingPlaylist = currentMusic.playlist?.id === id && isPlaying;
+  const isPlayingPlaylist = currentMusic.playlist?.id === id;
 
   const handleClick = () => {
-    if (isPlayingPlaylist) {
+    if (isPlaying && isPlayingPlaylist) {
       setIsPlaying(false);
+      return;
+    }
+
+    if (isPlayingPlaylist) {
+      setIsPlaying(true);
       return;
     }
 
@@ -38,7 +43,7 @@ function CardPlayButton({ id }: Props) {
 
   return (
     <PlayButton
-      isPlaying={isPlayingPlaylist}
+      isPlaying={isPlayingPlaylist && isPlaying}
       onClick={handleClick}
       size="md"
       className="bg-green-500 hover:bg-green-400"
